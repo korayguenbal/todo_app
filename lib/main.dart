@@ -24,6 +24,12 @@ class _TodoAppState extends State<TodoApp> {
     }
   }
 
+  void _removeTodo(int index) {
+    setState(() {
+      todos.removeAt(index);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,6 +41,20 @@ class _TodoAppState extends State<TodoApp> {
               Expanded(child: TextField(controller: _controller)),
               ElevatedButton(onPressed: _addTodo, child: Icon(Icons.add)),
             ],
+          ),
+          Expanded(
+            child: ListView.builder(
+              itemCount: todos.length,
+              itemBuilder: (context, index) {
+                return ListTile(
+                  title: Text(todos[index]),
+                  trailing: IconButton(
+                    onPressed: () => _removeTodo(index),
+                    icon: Icon(Icons.delete),
+                  ),
+                );
+              },
+            ),
           ),
         ],
       ),
